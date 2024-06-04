@@ -1,3 +1,4 @@
+
 // ------------------------------  SERVER DATA ------------------------------  
 
 let nextDogId = 1;
@@ -56,6 +57,7 @@ const getDogById = (req, res) => {
 
 // POST /dogs
 const createDog = (req, res) => {
+  // console.log(req.body)
   const { name } = req.body;
   const newDog = {
     dogId: getNewDogId(),
@@ -84,4 +86,14 @@ const deleteDog = (req, res) => {
 
 // ------------------------------  ROUTER ------------------------------  
 
-// Your code here 
+// Your code here
+const express = require('express')
+const router = express.Router();
+
+router.get('/', getAllDogs);
+router.get('/:dogId', validateDogId, getDogById);
+router.post('/', validateDogInfo, createDog);
+router.put('/:dogId', validateDogId, validateDogInfo, updateDog);
+router.delete('/:dogId', validateDogId, deleteDog);
+
+module.exports = router;

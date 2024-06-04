@@ -1,14 +1,17 @@
 const express = require('express');
 const app = express();
+app.use(express.json())
 app.use(logger);
-
+//creates the router
+const dogRouter = require('./routes/dogs')
+app.use('/dogs', dogRouter)
 
 
 function logger(req, res, next){
 console.log(req.method, req.path)
 // console.log(res.statusCode)
 res.on('finish', () => {
-  console.log(res.statusCode)
+  console.log(res.statusCode) 
 });
 next();
 }
