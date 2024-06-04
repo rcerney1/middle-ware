@@ -45,6 +45,7 @@ next(error);
 app.use((err, req, rec, next) => {
 console.log(err)
 err.statusCode = err.statusCode || 500
+console.log(`Something went wrong, ${err.statusCode}, ${err.stack}`)
 });
 
 

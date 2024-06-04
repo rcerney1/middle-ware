@@ -96,4 +96,8 @@ router.post('/', validateDogInfo, createDog);
 router.put('/:dogId', validateDogId, validateDogInfo, updateDog);
 router.delete('/:dogId', validateDogId, deleteDog);
 
+
+
+
+
 module.exports = router;
