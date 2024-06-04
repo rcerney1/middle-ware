@@ -1,5 +1,17 @@
 const express = require('express');
 const app = express();
+app.use(logger);
+
+
+
+function logger(req, res, next){
+console.log(req.method, req.path)
+// console.log(res.statusCode)
+res.on('finish', () => {
+  console.log(res.statusCode)
+});
+next();
+}
 
 // For testing purposes, GET /
 app.get('/', (req, res) => {
@@ -18,6 +30,33 @@ app.post('/test-json', (req, res, next) => {
 app.get('/test-error', async (req, res) => {
   throw new Error("Hello World!")
 });
+
+
+app.use((req, rec, next) => {
+const error = new Error("The requested resource couldn't be found.")
+error.statusCode = 404;
+next(error);
+});
+
+
+app.use((err, req, rec, next) => {
+console.log(err)
+err.statusCode = err.statusCode || 500
+});
+
+
+
+
+
+
+
+
+// app.get((err, req, rec, next) => {
+// const error = new Error("The requested resource couldn't be found.")
+// err.statusCode = 404;
+// next(error);
+// })
+
 
 const port = 5000;
 app.listen(port, () => console.log('Server is listening on port', port));
